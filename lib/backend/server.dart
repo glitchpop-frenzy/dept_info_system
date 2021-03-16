@@ -128,23 +128,29 @@ Future<void> start() async {
   ]);
 
   //SHOW DEPARTMENT PAGE
-  serv.get('/department', [
+  serv.get('/department/:type', [
     (ServRequest req, ServResponse res) async {
-      var profList =
-          await prof.find(where.eq('dept', req.query['dept'])).toList();
-      var AprofList =
-          await Aprof.find(where.eq('dept', req.query['dept'])).toList();
-      var phdList =
-          await phd.find(where.eq('dept', req.query['dept'])).toList();
-      var resourcesList =
-          await resources.find(where.eq('dept', req.query['dept'])).toList();
-
-      return res.status(200).json({
-        'profList': profList,
-        'AprofList': AprofList,
-        'phdList': phdList,
-        'resourcesList': resourcesList
-      });
+      /*  var profList = prof.find(where.eq('dept', req.query['dept']).and(where.eq())).toList();
+      var AprofList = Aprof.find(where.eq('dept', req.query['dept'])).toList();
+      var phdList = phd.find(where.eq('dept', req.query['dept'])).toList();
+      var resourcesList =resources.find(where.eq('dept', req.query['dept'])).toList();
+      */
+      if (req.params['type'] == 'prof') {
+        var list =
+            await prof.find(where.eq('dept', req.query['dept'])).toList();
+        return res.status(200).json({'list': list});
+      } else if (req.params['type'] == 'Aprof') {
+        var list =
+            await Aprof.find(where.eq('dept', req.query['dept'])).toList();
+        return res.status(200).json({'list': list});
+      } else if (req.params['type'] == 'phd') {
+        var list = await phd.find(where.eq('dept', req.query['dept'])).toList();
+        return res.status(200).json({'list': list});
+      } else if (req.params['type'] == 'resources') {
+        var list =
+            await resources.find(where.eq('dept', req.query['dept'])).toList();
+        return res.status(200).json({'list': list});
+      }
     }
   ]);
 
