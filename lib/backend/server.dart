@@ -1,24 +1,24 @@
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:sevr/sevr.dart';
 
-Future<void> start() async {
+void main() async {
   final db = await Db.create(
-      'mongodb+srv://saksham:saksham@cluster0.ayj3r.mongodb.net/apptest?retryWrites=true&w=majority');
+      'mongodb+srv://prasad:prasad@cluster0.ayj3r.mongodb.net/apptest?retryWrites=true&w=majority');
   await db.open();
-
+  print('DB OPENED');
+  print('DB selected');
+  //print(await users.find().toList());
+  //await users.insert({'userName': 'PrasadDash', 'password': 'FakirI'});
   const port = 3000;
   final serv = Sevr();
-
   final prof = db.collection('prof');
   final Aprof = db.collection('Aprof');
   final phd = db.collection('phd');
   final resources = db.collection('resources');
   final users = db.collection('users');
-
   serv.listen(port, callback: () {
-    print('listening of $port');
+    print('listening of 3000');
   });
-
   //REGISTER
   serv.post('/register/:type', [
     (ServRequest req, ServResponse res) async {
@@ -86,11 +86,9 @@ Future<void> start() async {
       }
     }
   ]);
-
   //SHOW INDIVIDUAL PAGE
-  // DONE
-
   serv.get('/individualPage/:type', [
+    //NEEDS WORK
     (ServRequest req, ServResponse res) async {
       print('Insearch');
       if (req.params['type'] == 'prof') {
@@ -126,42 +124,46 @@ Future<void> start() async {
       }
     }
   ]);
-
   //SHOW DEPARTMENT PAGE
-  serv.get('/department', [
+  serv.get('/department/:type', [
     (ServRequest req, ServResponse res) async {
-      var profList =
-          await prof.find(where.eq('dept', req.query['dept'])).toList();
-      var AprofList =
-          await Aprof.find(where.eq('dept', req.query['dept'])).toList();
-      var phdList =
-          await phd.find(where.eq('dept', req.query['dept'])).toList();
-      var resourcesList =
-          await resources.find(where.eq('dept', req.query['dept'])).toList();
-
-      return res.status(200).json({
-        'profList': profList,
-        'AprofList': AprofList,
-        'phdList': phdList,
-        'resourcesList': resourcesList
-      });
+      /*  var profList = prof.find(where.eq('dept', req.query['dept']).and(where.eq())).toList();
+      var AprofList = Aprof.find(where.eq('dept', req.query['dept'])).toList();
+      var phdList = phd.find(where.eq('dept', req.query['dept'])).toList();
+      var resourcesList =resources.find(where.eq('dept', req.query['dept'])).toList();
+      */
+      if (req.params['type'] == 'prof') {
+        var list =
+            await prof.find(where.eq('dept', req.query['dept'])).toList();
+        return res.status(200).json({'list': list});
+      } else if (req.params['type'] == 'Aprof') {
+        var list =
+            await Aprof.find(where.eq('dept', req.query['dept'])).toList();
+        return res.status(200).json({'list': list});
+      } else if (req.params['type'] == 'phd') {
+        var list = await phd.find(where.eq('dept', req.query['dept'])).toList();
+        return res.status(200).json({'list': list});
+      } else if (req.params['type'] == 'resources') {
+        var list =
+            await resources.find(where.eq('dept', req.query['dept'])).toList();
+        return res.status(200).json({'list': list});
+      }
     }
   ]);
-
   //SHOW PROF/APROF/PHD/RESOURCES PAGE
   serv.get('/listPage/:type', [
     (ServRequest req, ServResponse res) async {
       if (req.params['type'] == 'prof') {
-        var list = await prof.find().toList();
+        var list = prof.find().toList();
         return res.status(200).json({'list': list});
       } else if (req.params['type'] == 'Aprof') {
-        var list = await Aprof.find().toList();
+        var list = Aprof.find().toList();
         return res.status(200).json({'list': list});
       } else if (req.params['type'] == 'phd') {
-        var list = await phd.find().toList();
+        var list = phd.find().toList();
         return res.status(200).json({'list': list});
       } else if (req.params['type'] == 'resources') {
-        var list = await resources.find().toList();
+        var list = resources.find().toList();
         return res.status(200).json({'list': list});
       }
     }
@@ -169,7 +171,7 @@ Future<void> start() async {
   //USER LIST
   serv.get('/user', [
     (ServRequest req, ServResponse res) async {
-      var userList = await users.find().toList();
+      var userList = users.find().toList();
       return res.status(200).json({'userList': userList});
     }
   ]);
