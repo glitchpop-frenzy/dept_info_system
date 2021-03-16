@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:iiitbh_dept_info_system/screens/aprof_screen.dart';
 import 'package:provider/provider.dart';
 import './providers/prof_list.dart';
 import './providers/phd_list.dart';
@@ -9,7 +10,9 @@ import 'widgets/faculty_item.dart';
 import './providers/faculty_list.dart';
 
 import 'screens/prof_screen.dart';
+import 'screens/phd_screen.dart';
 import 'screens/faculty_screen.dart';
+import 'screens/resources_screen.dart';
 import 'screens/tabs_screen.dart';
 import './backend/server.dart' as server;
 
@@ -24,9 +27,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider.value(
-          value: AprofList(),
-        ),
         ChangeNotifierProvider.value(
           value: ProfList(),
         ),
@@ -77,7 +77,10 @@ class MyApp extends StatelessWidget {
         routes: {
           FacultyScreen.routeName: (ctx) => FacultyScreen(),
           FacultyItem.routeName: (ctx) => FacultyItem(),
-          ProfScreen.routeName: (ctx) => ProfScreen()
+          ProfScreen.routeName: (ctx) => ProfScreen(),
+          AprofScreen.routeName: (ctx) => AprofScreen(),
+          PhdScreen.routeName: (ctx) => PhdScreen(),
+          ResourcesScreen.routeName: (ctx) => ResourcesScreen()
         },
       ),
     );

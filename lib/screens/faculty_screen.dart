@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/faculty_item.dart';
+import 'aprof_screen.dart';
 import '../providers/faculty_list.dart';
+import 'resources_screen.dart';
+import 'phd_screen.dart';
 import 'prof_screen.dart';
+import 'resources_screen.dart';
 
 class FacultyScreen extends StatelessWidget {
   TextStyle textStyle(double size) {
@@ -72,7 +76,7 @@ class FacultyScreen extends StatelessWidget {
                       backgroundColor:
                           MaterialStateProperty.all(Color(0xFFefd9ce))),
                   onPressed: () {
-                    Navigator.of(context).pushNamed(FacultyItem.routeName,
+                    Navigator.of(context).pushNamed(AprofScreen.routeName,
                         arguments: 'Assistant Professors');
                   },
                   child: Center(
@@ -91,12 +95,12 @@ class FacultyScreen extends StatelessWidget {
                       backgroundColor:
                           MaterialStateProperty.all(Colors.red[200])),
                   onPressed: () {
-                    Navigator.of(context).pushNamed(FacultyItem.routeName,
-                        arguments: 'Doctorate Professors');
+                    Navigator.of(context).pushNamed(PhdScreen.routeName,
+                        arguments: 'PhD Students');
                   },
                   child: Center(
                       child: Text(
-                    'Doctrate Faculties',
+                    'PhD Scholars',
                     style: textStyle(36),
                   )),
                 ),
@@ -110,7 +114,7 @@ class FacultyScreen extends StatelessWidget {
                       backgroundColor:
                           MaterialStateProperty.all(Color(0xFFefd9ce))),
                   onPressed: () {
-                    Navigator.of(context).pushNamed(FacultyItem.routeName,
+                    Navigator.of(context).pushNamed(ResourcesScreen.routeName,
                         arguments: 'Resources');
                   },
                   child: Center(
