@@ -1,44 +1,57 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import '../providers/prof_list.dart';
-// import '../providers/aprof_list.dart';
-// import '../providers/phd_list.dart';
-// import '../providers/resources_list.dart';
+import 'package:provider/provider.dart';
+import '../providers/aprof_list.dart';
+import '../providers/aprof_list.dart';
+import 'package:http/http.dart' as http;
 
-// import '../providers/faculty_list.dart';
-// import '../models/faculty.dart';
-
-class FacultyItem extends StatefulWidget {
-  static const routeName = '/faculty-item';
+class AprofScreen extends StatefulWidget {
+  static const routeName = 'aprof-screen';
 
   @override
-  _FacultyItemState createState() => _FacultyItemState();
+  _AprofScreenState createState() => _AprofScreenState();
 }
 
-class _FacultyItemState extends State<FacultyItem> {
+class _AprofScreenState extends State<AprofScreen> {
+  bool _isLoading = true;
   bool _isInit = true;
 
-  List<Map<String, dynamic>> list;
-  bool _isLoading = true;
-  // List<Faculty> faculty;
+  List<Aprof> dataList = [];
+  Future<void> getAprof() async {
+    final url = 'http://localhost:3000/listPage/Aprof';
+    final response = await http.get(url);
 
-  int num = 0;
-
-  List<Color> grad() {
-    num += 1;
-    if (num % 2 == 0) {
-      return [Color(0xFFdcd6f7), Color(0xFFa1fcdf)];
-    } else {
-      return [Color(0xFFfbc3bc), Color(0xFFfbc3bc)];
-    }
+    final jsonResponse = json.decode(response.body.toString());
+    dataList = AprofList.fromJson(jsonResponse['list']).list;
   }
 
-  String type;
-  String title;
+  @override
+  void didChangeDependencies() async {
+    if (_isInit) {
+      await getAprof();
+      setState(() {
+        _isLoading = false;
+      });
+    }
+    _isInit = false;
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
+    final title = ModalRoute.of(context).settings.arguments as String;
+    int num = 0;
     final mediaquery = MediaQuery.of(context);
+
+    List<Color> grad() {
+      num += 1;
+      if (num % 2 == 0) {
+        return [Color(0xFFdcd6f7), Color(0xFFa1fcdf)];
+      } else {
+        return [Color(0xFFfbc3bc), Color(0xFFfbc3bc)];
+      }
+    }
 
     Widget fieldInfo(String field, String fac) {
       return Row(children: [
@@ -48,14 +61,12 @@ class _FacultyItemState extends State<FacultyItem> {
         ),
         Text(
           '$fac',
-          // textAlign: TextAlign.right,
           style: Theme.of(context).textTheme.headline5,
         ),
       ]);
     }
 
-    final faculty = [];
-    return Scaffold(
+    var scaffold = Scaffold(
       appBar: AppBar(
         title: Text(title),
       ),
@@ -83,11 +94,11 @@ class _FacultyItemState extends State<FacultyItem> {
                             Row(
                               children: [
                                 Text(
-                                  'FacultyId: ',
+                                  'userId: ',
                                   style: Theme.of(context).textTheme.headline4,
                                 ),
                                 Text(
-                                  '${faculty[index]['userId']}',
+                                  '${dataList[index].userId}',
                                   style: Theme.of(context).textTheme.headline3,
                                 )
                               ],
@@ -95,30 +106,35 @@ class _FacultyItemState extends State<FacultyItem> {
                             SizedBox(
                               height: 5,
                             ),
-                            fieldInfo('Name ', faculty[index]['name']),
+                            fieldInfo('Name ', dataList[index].name),
                             SizedBox(
                               height: 8,
                             ),
-                            //fieldInfo('Date of Joining ', faculty[index].doj),
+                            //fieldInfo('Date of Joining ', profList[index].doj),
                             Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  fieldInfo('Dept', faculty[index].dept),
-                                  fieldInfo(
-                                      'Date of Joining ', faculty[index]['DoJ'])
+                                  fieldInfo('Dept', dataList[index].dept),
+                                  Flexible(
+                                    child: FittedBox(
+                                      child: fieldInfo(
+                                          'DoJ ', dataList[index].DoJ),
+                                    ),
+                                  )
                                 ]),
                             SizedBox(
                               height: 8,
                             ),
-                            fieldInfo('Education', faculty[index]['education'])
+                            fieldInfo('Education', dataList[index].education)
                           ]),
                     ),
                   ),
                 );
               },
-              itemCount: faculty.length,
+              itemCount: dataList.length,
             ),
     );
+    return scaffold;
   }
 }
