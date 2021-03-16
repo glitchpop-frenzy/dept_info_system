@@ -1,9 +1,9 @@
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:sevr/sevr.dart';
 
-void main() async {
+Future<void> start() async {
   final db = await Db.create(
-      'mongodb+srv://prasad:prasad@cluster0.ayj3r.mongodb.net/apptest?retryWrites=true&w=majority');
+      'mongodb+srv://saksham:saksham@cluster0.ayj3r.mongodb.net/apptest?retryWrites=true&w=majority');
   await db.open();
   print('DB OPENED');
   print('DB selected');

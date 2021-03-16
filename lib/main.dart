@@ -17,7 +17,7 @@ import 'screens/tabs_screen.dart';
 import './backend/server.dart' as server;
 
 void main() async {
-  //await server.start();
+  await server.start();
   runApp(MyApp());
 }
 
