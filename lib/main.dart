@@ -14,9 +14,10 @@ import './screens/dept_aprof_screen.dart';
 import 'screens/faculty_screen.dart';
 import 'screens/resources_screen.dart';
 import 'screens/tabs_screen.dart';
+// import 'backend/server.dart' as server;
 
 void main() async {
-  await server.start();
+  //await server.start();
   runApp(MyApp());
 }
 
