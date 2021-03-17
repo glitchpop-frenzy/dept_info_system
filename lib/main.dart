@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:iiitbh_dept_info_system/screens/aprof_screen.dart';
+import './screens/aprof_screen.dart';
 import 'package:provider/provider.dart';
 import './providers/prof_list.dart';
 import './providers/phd_list.dart';
 import './providers/resources_list.dart';
-import './providers/aprof_list.dart';
 
-import 'widgets/faculty_item.dart';
-import './providers/faculty_list.dart';
-
+import 'screens/dept_phd_screen.dart';
 import 'screens/prof_screen.dart';
 import 'screens/phd_screen.dart';
+import './screens/dept_faculty_screen.dart';
+import './screens/dept_prof_screen.dart';
+import './screens/dept_aprof_screen.dart';
 import 'screens/faculty_screen.dart';
 import 'screens/resources_screen.dart';
 import 'screens/tabs_screen.dart';
-import './backend/server.dart' as server;
 
 void main() async {
   await server.start();
@@ -76,11 +75,14 @@ class MyApp extends StatelessWidget {
         home: TabsScreen(),
         routes: {
           FacultyScreen.routeName: (ctx) => FacultyScreen(),
-          FacultyItem.routeName: (ctx) => FacultyItem(),
           ProfScreen.routeName: (ctx) => ProfScreen(),
           AprofScreen.routeName: (ctx) => AprofScreen(),
           PhdScreen.routeName: (ctx) => PhdScreen(),
-          ResourcesScreen.routeName: (ctx) => ResourcesScreen()
+          ResourcesScreen.routeName: (ctx) => ResourcesScreen(),
+          DeptFacultyScreen.routeName: (ctx) => DeptFacultyScreen(),
+          DeptProfScreen.routeName: (ctx) => DeptProfScreen(),
+          DeptAprofScreen.routeName: (ctx) => DeptAprofScreen(),
+          DeptPhdScreen.routeName: (ctx) => DeptPhdScreen(),
         },
       ),
     );
