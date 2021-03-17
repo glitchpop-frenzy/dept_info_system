@@ -1,48 +1,46 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import '../providers/aprof_list.dart';
+import '../providers/phd_list.dart';
 import 'package:http/http.dart' as http;
 
-class AprofScreen extends StatefulWidget {
-  static const routeName = 'aprof-screen';
-
+class DeptPhdScreen extends StatefulWidget {
+  static const routeName = 'dept-phd-screen';
   @override
-  _AprofScreenState createState() => _AprofScreenState();
+  _DeptPhdScreenState createState() => _DeptPhdScreenState();
 }
 
-class _AprofScreenState extends State<AprofScreen> {
-  bool _isLoading = true;
+class _DeptPhdScreenState extends State<DeptPhdScreen> {
+  String title;
+  int color;
   bool _isInit = true;
+  bool _isLoading = true;
 
-  List<Aprof> dataList = [];
-  Future<void> getAprof() async {
-    final url = 'http://localhost:3000/listPage/Aprof';
+  List<Phd> dataList = [];
+  Future<void> getPhd() async {
+    String url = 'http://localhost:3000/department/phd?dept=$title';
     final response = await http.get(url);
-
-    final jsonResponse = json.decode(response.body.toString());
-    dataList = AprofList.fromJson(jsonResponse['list']).list;
+    final jsonResponse = json.decode(response.body);
+    dataList = PhdList.fromJson(jsonResponse['list']).phdList;
+    //print(dataList);
   }
 
   @override
   void didChangeDependencies() async {
-    if (_isInit) {
-      await getAprof();
-      setState(() {
-        _isLoading = false;
-      });
-    }
+    List args = ModalRoute.of(context).settings.arguments as List;
+    title = args[0];
+    color = args[1];
+    await getPhd();
+    setState(() {
+      _isLoading = false;
+    });
     _isInit = false;
     super.didChangeDependencies();
   }
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context).settings.arguments as List;
-    final title = args[0];
-    final color = args[1];
     int num = 0;
-    final mediaquery = MediaQuery.of(context);
 
     List<Color> grad() {
       num += 1;
@@ -61,17 +59,22 @@ class _AprofScreenState extends State<AprofScreen> {
         ),
         Text(
           '$fac',
+          // textAlign: TextAlign.right,
           style: Theme.of(context).textTheme.headline5,
         ),
       ]);
     }
+
+    final mediaquery = MediaQuery.of(context);
+    //final title = ModalRoute.of(context).settings.arguments as List;
 
     var scaffold = Scaffold(
       appBar: PreferredSize(
         preferredSize:
             Size(double.infinity, MediaQuery.of(context).size.height * 0.07),
         child: AppBar(
-          title: Text(title),
+          title: Text('$title / Phd Students',
+              style: TextStyle(color: Color(0xFFecf8f8))),
           flexibleSpace: Container(
             decoration: BoxDecoration(
               color: Color(color),
@@ -125,6 +128,9 @@ class _AprofScreenState extends State<AprofScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   fieldInfo('Dept', dataList[index].dept),
+                                  SizedBox(
+                                    width: 5.0,
+                                  ),
                                   Flexible(
                                     child: FittedBox(
                                       child: fieldInfo(
@@ -145,5 +151,6 @@ class _AprofScreenState extends State<AprofScreen> {
             ),
     );
     return scaffold;
+    ;
   }
 }

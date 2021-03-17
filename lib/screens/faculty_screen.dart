@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../widgets/faculty_item.dart';
 import 'aprof_screen.dart';
-import '../providers/faculty_list.dart';
 import 'resources_screen.dart';
 import 'phd_screen.dart';
 import 'prof_screen.dart';
-import 'resources_screen.dart';
 
 class FacultyScreen extends StatelessWidget {
   TextStyle textStyle(double size) {
@@ -22,11 +19,17 @@ class FacultyScreen extends StatelessWidget {
   // FacultyCategoryScreen();
   @override
   Widget build(BuildContext context) {
+    //final title = ModalRoute.of(context).settings.arguments as String;
+
     return Scaffold(
       appBar: PreferredSize(
           preferredSize:
               Size(double.infinity, MediaQuery.of(context).size.height * 0.07),
           child: AppBar(
+            leading: Icon(
+              Icons.school,
+              size: 30,
+            ),
             title: Text(
               'Faculty',
               style: TextStyle(color: Colors.black),
@@ -58,7 +61,7 @@ class FacultyScreen extends StatelessWidget {
                           MaterialStateProperty.all(Color(0xFF9ec1a3))),
                   onPressed: () {
                     Navigator.of(context).pushNamed(ProfScreen.routeName,
-                        arguments: 'Professors');
+                        arguments: ['Professors', 0xFF9ec1a3]);
                   },
                   child: Center(
                       child: Text(
@@ -77,7 +80,7 @@ class FacultyScreen extends StatelessWidget {
                           MaterialStateProperty.all(Color(0xFFefd9ce))),
                   onPressed: () {
                     Navigator.of(context).pushNamed(AprofScreen.routeName,
-                        arguments: 'Assistant Professors');
+                        arguments: ['Assistant Professors', 0xFFefd9ce]);
                   },
                   child: Center(
                       child: Text(
@@ -93,10 +96,10 @@ class FacultyScreen extends StatelessWidget {
                 child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all(Colors.red[200])),
+                          MaterialStateProperty.all(Color(0xFFffafcc))),
                   onPressed: () {
                     Navigator.of(context).pushNamed(PhdScreen.routeName,
-                        arguments: 'PhD Students');
+                        arguments: ['PhD Students', 0xFFffafcc]);
                   },
                   child: Center(
                       child: Text(
@@ -112,10 +115,10 @@ class FacultyScreen extends StatelessWidget {
                 child: ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor:
-                          MaterialStateProperty.all(Color(0xFFefd9ce))),
+                          MaterialStateProperty.all(Color(0xFFcdb4db))),
                   onPressed: () {
                     Navigator.of(context).pushNamed(ResourcesScreen.routeName,
-                        arguments: 'Resources');
+                        arguments: ['Resources', 0xFFcdb4db]);
                   },
                   child: Center(
                       child: Text(

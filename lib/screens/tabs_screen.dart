@@ -27,8 +27,8 @@ class _TabsScreenState extends State<TabsScreen> {
     serverCall();
     super.initState();
     _pages = [
-      {'page': FacultyScreen(), 'title': 'Faculty'},
       {'page': DeptHome(), 'title': 'Departments'},
+      {'page': FacultyScreen(), 'title': 'Faculty'},
     ];
   }
 
@@ -48,7 +48,7 @@ class _TabsScreenState extends State<TabsScreen> {
       bottomNavigationBar: SizedBox(
         height: MediaQuery.of(context).size.height * 0.1,
         child: BottomNavigationBar(
-            iconSize: 30.0,
+            iconSize: 36.0,
             currentIndex: _selectedPage,
             onTap: _selectPage,
             selectedItemColor: Colors.black,
@@ -59,8 +59,9 @@ class _TabsScreenState extends State<TabsScreen> {
             type: BottomNavigationBarType.shifting,
             items: [
               BottomNavigationBarItem(
+                  icon: Icon(Icons.apartment_sharp), label: 'Dept'),
+              BottomNavigationBarItem(
                   icon: Icon(Icons.school), label: 'Faculty'),
-              BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Dept'),
             ]),
       ),
     );

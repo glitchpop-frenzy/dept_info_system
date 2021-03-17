@@ -67,11 +67,22 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
     }
 
     final mediaquery = MediaQuery.of(context);
-    final title = ModalRoute.of(context).settings.arguments as String;
+    final args = ModalRoute.of(context).settings.arguments as List;
+    final title = args[0];
+    final color = args[1];
 
     var scaffold = Scaffold(
-      appBar: AppBar(
-        title: Text(title),
+      appBar: PreferredSize(
+        preferredSize:
+            Size(double.infinity, MediaQuery.of(context).size.height * 0.07),
+        child: AppBar(
+          title: Text(title),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              color: Color(color),
+            ),
+          ),
+        ),
       ),
       body: _isLoading
           ? Center(
