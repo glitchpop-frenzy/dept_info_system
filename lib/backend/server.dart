@@ -180,19 +180,19 @@ Future<void> start() async {
     (ServRequest req, ServResponse res) async {
       if (req.params['type'] == 'prof') {
         await prof.update(
-            await where.eq('name', req.body['name']), req.body['newData']);
+            where.eq('name', req.body['name']), req.body['newData']);
         return res.status(200).json({'updated': 'true'});
       } else if (req.params['type'] == 'Aprof') {
         await Aprof.update(
-            await where.eq('name', req.body['name']), req.body['newData']);
+            where.eq('name', req.body['name']), req.body['newData']);
         return res.status(200).json({'updated': 'true'});
       } else if (req.params['type'] == 'phd') {
         await phd.update(
-            await where.eq('name', req.body['name']), req.body['newData']);
+            where.eq('name', req.body['name']), req.body['newData']);
         return res.status(200).json({'updated': 'true'});
       } else if (req.params['type'] == 'resources') {
         await resources.update(
-            await where.eq('name', req.body['name']), req.body['newData']);
+            where.eq('name', req.body['name']), req.body['newData']);
         return res.status(200).json({'updated': 'true'});
       }
     }

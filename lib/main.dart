@@ -5,6 +5,8 @@ import './providers/prof_list.dart';
 import './providers/phd_list.dart';
 import './providers/resources_list.dart';
 
+import './backend/server.dart' as server;
+
 import 'screens/dept_phd_screen.dart';
 import 'screens/prof_screen.dart';
 import 'screens/phd_screen.dart';
