@@ -5,20 +5,20 @@ Future<void> start() async {
   final db = await Db.create(
       'mongodb+srv://saksham:saksham@cluster0.ayj3r.mongodb.net/apptest?retryWrites=true&w=majority');
   await db.open();
-  print('DB OPENED');
-  print('DB selected');
-  //print(await users.find().toList());
-  //await users.insert({'userName': 'PrasadDash', 'password': 'FakirI'});
+
   const port = 3000;
   final serv = Sevr();
+
   final prof = db.collection('prof');
   final Aprof = db.collection('Aprof');
   final phd = db.collection('phd');
   final resources = db.collection('resources');
   final users = db.collection('users');
+
   serv.listen(port, callback: () {
     print('listening of 3000');
   });
+
   //REGISTER
   serv.post('/register/:type', [
     (ServRequest req, ServResponse res) async {
@@ -71,24 +71,33 @@ Future<void> start() async {
       return res.status(200).json({'inserted': 'Ok'});
     }
   ]);
-  print(await users.findOne(where.eq('userName', 'Prasad')));
+
   //LOGIN
   serv.get('/login', [
     (ServRequest req, ServResponse res) async {
       print('InLogin');
       var user = await users.findOne(where.eq('userId', req.query['login']));
+
       if (user != null) {
+        // If user exists
         if (user['password'] == req.query['password']) {
-          return res.status(200).json({'verified': 'Yes'});
+          // If input password is correct
+          return res
+              .status(200)
+              .json({'user_exists': 'Yes', 'verified': 'Yes'});
+        } else {
+          // If input password is incorrect
+          return res.status(200).json({'user_exists': 'Yes', 'verified': 'No'});
         }
       } else {
-        return res.status(200).json({'verified': 'No'});
+        // If user does not exist
+        return res.status(200).json({'user_exists': 'No', 'verified': 'No'});
       }
     }
   ]);
+
   //SHOW INDIVIDUAL PAGE
   serv.get('/individualPage/:type', [
-    //NEEDS WORK
     (ServRequest req, ServResponse res) async {
       print('Insearch');
       if (req.params['type'] == 'prof') {
@@ -124,6 +133,7 @@ Future<void> start() async {
       }
     }
   ]);
+
   //SHOW DEPARTMENT PAGE
   serv.get('/department/:type', [
     (ServRequest req, ServResponse res) async {
@@ -150,6 +160,7 @@ Future<void> start() async {
       }
     }
   ]);
+
   //SHOW PROF/APROF/PHD/RESOURCES PAGE
   serv.get('/listPage/:type', [
     (ServRequest req, ServResponse res) async {
@@ -168,6 +179,7 @@ Future<void> start() async {
       }
     }
   ]);
+
   //USER LIST
   serv.get('/user', [
     (ServRequest req, ServResponse res) async {
@@ -175,8 +187,8 @@ Future<void> start() async {
       return res.status(200).json({'userList': userList});
     }
   ]);
+  
 //Change password
-
 //UPDATE
   serv.post('/editProfile/:type', [
     (ServRequest req, ServResponse res) async {
