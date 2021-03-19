@@ -187,26 +187,30 @@ Future<void> start() async {
       return res.status(200).json({'userList': userList});
     }
   ]);
-
-  //UPDATE
+  
+//Change password
+//UPDATE
   serv.post('/editProfile/:type', [
     (ServRequest req, ServResponse res) async {
       if (req.params['type'] == 'prof') {
         await prof.update(
-            where.eq('name', req.body['name']), req.body['newData']);
+            await where.eq('name', req.body['name']), req.body['newData']);
         return res.status(200).json({'updated': 'true'});
       } else if (req.params['type'] == 'Aprof') {
         await Aprof.update(
-            where.eq('name', req.body['name']), req.body['newData']);
+            await where.eq('name', req.body['name']), req.body['newData']);
         return res.status(200).json({'updated': 'true'});
       } else if (req.params['type'] == 'phd') {
         await phd.update(
-            where.eq('name', req.body['name']), req.body['newData']);
+            await where.eq('name', req.body['name']), req.body['newData']);
         return res.status(200).json({'updated': 'true'});
       } else if (req.params['type'] == 'resources') {
         await resources.update(
-            where.eq('name', req.body['name']), req.body['newData']);
+            await where.eq('name', req.body['name']), req.body['newData']);
         return res.status(200).json({'updated': 'true'});
+      } else if (req.params['type'] == 'password') {
+        await users.update(
+            where.eq('userId', req.body['username']), req.body['newData']);
       }
     }
   ]);
