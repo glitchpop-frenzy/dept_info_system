@@ -165,16 +165,16 @@ Future<void> start() async {
   serv.get('/listPage/:type', [
     (ServRequest req, ServResponse res) async {
       if (req.params['type'] == 'prof') {
-        var list = prof.find().toList();
+        var list = await prof.find().toList();
         return res.status(200).json({'list': list});
       } else if (req.params['type'] == 'Aprof') {
-        var list = Aprof.find().toList();
+        var list = await Aprof.find().toList();
         return res.status(200).json({'list': list});
       } else if (req.params['type'] == 'phd') {
-        var list = phd.find().toList();
+        var list = await phd.find().toList();
         return res.status(200).json({'list': list});
       } else if (req.params['type'] == 'resources') {
-        var list = resources.find().toList();
+        var list = await resources.find().toList();
         return res.status(200).json({'list': list});
       }
     }
@@ -187,7 +187,7 @@ Future<void> start() async {
       return res.status(200).json({'userList': userList});
     }
   ]);
-  
+
 //Change password
 //UPDATE
   serv.post('/editProfile/:type', [
