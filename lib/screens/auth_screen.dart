@@ -117,36 +117,75 @@ class _AuthCardState extends State<AuthCard> {
       if (extractedData['user_exists'] == 'Yes') {
         if (extractedData['verified'] == 'Yes') {
           _isAuth = true;
+
           Navigator.of(context).pushReplacementNamed(TabsScreen.routeName,
-              arguments: [_isAuth, _userIdContoller.text]);
+              arguments: [_isAuth, _authData['userId']]);
         } else if (extractedData['verified'] == 'No') {
           showDialog(
               context: context,
               builder: (ctx) => AlertDialog(
-                    content: Text('Username or password incorrect'),
-                    title: Text('Authentication Failed'),
-                    titleTextStyle: TextStyle(
-                      fontFamily: 'Prompt',
-                      fontSize: 18,
-                      fontWeight: FontWeight.w400,
+                    content: Text('Username or Password incorrect!!'),
+                    title: Text(
+                      'Authentication Failed',
                     ),
+                    titleTextStyle: TextStyle(
+                        fontFamily: 'Prompt',
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black),
                     actions: [
                       TextButton(
-                        style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Color(0xFFfaedcd))),
+                        // style: ButtonStyle(
+                        //     backgroundColor:
+                        //         MaterialStateProperty.all(Color(0xFFfaedcd))),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
-                        child: Text(
-                          'Okay',
-                          style: TextStyle(fontFamily: 'Prompt', fontSize: 15),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(7),
+                          child: Container(
+                            color: Color(0xFFffd8be),
+                            padding: EdgeInsets.all(10),
+                            child: Text(
+                              'Okay',
+                              style: TextStyle(
+                                  fontFamily: 'Prompt',
+                                  fontSize: 15,
+                                  color: Colors.black),
+                            ),
+                          ),
                         ),
                       )
                     ],
                   ));
         }
-      } else if (extractedData['user_exists'] == 'No') {}
+      } else if (extractedData['user_exists'] == 'No') {
+        showDialog(
+            context: context,
+            builder: (ctx) => AlertDialog(
+                  content: Text('This user is not registered!!'),
+                  title: Text('Error'),
+                  titleTextStyle: TextStyle(
+                    fontFamily: 'Prompt',
+                    fontSize: 18,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  actions: [
+                    TextButton(
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Color(0xFFfaedcd))),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      child: Text(
+                        'Okay',
+                        style: TextStyle(fontFamily: 'Prompt', fontSize: 15),
+                      ),
+                    )
+                  ],
+                ));
+      }
     } on HttpException catch (_) {
       var errorMessage = 'Authentication Failed!!';
       _errorDialog(errorMessage);
@@ -156,22 +195,6 @@ class _AuthCardState extends State<AuthCard> {
     setState(() {
       _isButtonLoading = false;
     });
-  }
-
-  //bool _isInit = true;
-
-  // @override
-  // void initState() {
-  //   serverCall();
-  //   super.initState();
-  // }
-
-  @override
-  void didChangeDependencies() {
-    // if (widget.isInit) {
-    //   serverCall();
-    // }
-    super.didChangeDependencies();
   }
 
   @override
@@ -184,13 +207,7 @@ class _AuthCardState extends State<AuthCard> {
 
   @override
   Widget build(BuildContext context) {
-    return
-        //_isLoading
-        //     ? Container(
-        //         margin: EdgeInsets.symmetric(
-        //             vertical: MediaQuery.of(context).size.height * 0.05),
-        //         child: CircularProgressIndicator()):
-        Card(
+    return Card(
       borderOnForeground: false,
       elevation: 10,
       margin: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
@@ -314,7 +331,6 @@ class _AuthCardState extends State<AuthCard> {
                   },
                   onFieldSubmitted: (value) {
                     _authData['password'] = value;
-                    _submit;
                   },
                 ),
               ),

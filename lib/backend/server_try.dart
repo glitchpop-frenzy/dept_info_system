@@ -1,7 +1,7 @@
 import 'package:mongo_dart/mongo_dart.dart';
 import 'package:sevr/sevr.dart';
 
-Future<void> start() async {
+void main() async {
   final db = await Db.create(
       'mongodb+srv://saksham:saksham@cluster0.ayj3r.mongodb.net/apptest?retryWrites=true&w=majority');
   await db.open();
@@ -195,50 +195,26 @@ Future<void> start() async {
     // local/editProfile/prof, body: {}
     (ServRequest req, ServResponse res) async {
       if (req.params['type'] == 'prof') {
-        print(req.body);
         await prof.update(
-            where.eq('userId', req.query['userId']),
+            await where.eq('userId', req.body['userId']),
             req.body[
                 'newData']); // newData = {'userId': a001, newData: {name, userId, DoJ, education, additional, dept}}
         return res.status(200).json({'updated': 'true'});
       } else if (req.params['type'] == 'Aprof') {
         await Aprof.update(
-            where.eq('userId', req.query['userId']), req.body['newData']);
+            await where.eq('userId', req.body['userId']), req.body['newData']);
         return res.status(200).json({'updated': 'true'});
       } else if (req.params['type'] == 'phd') {
         await phd.update(
-            where.eq('userId', req.query['userId']), req.body['newData']);
+            await where.eq('userId', req.body['userId']), req.body['newData']);
         return res.status(200).json({'updated': 'true'});
       } else if (req.params['type'] == 'resources') {
         await resources.update(
-            where.eq('name', req.query['name']), req.body['newData']);
+            await where.eq('name', req.body['name']), req.body['newData']);
         return res.status(200).json({'updated': 'true'});
       } else if (req.params['type'] == 'password') {
-        print(req.body['newData']);
         await users.update(
-            where.eq('userId', req.query['userId']), req.body['newData']);
-
-        return res.status(200).json({'updated': 'true'});
-      }
-    }
-  ]);
-
-  //delete
-  serv.get('/deleteProfile/:type', [
-    (ServRequest req, ServResponse res) async {
-      users.remove(where.eq('userId', req.query['userId']));
-      if (req.params['type'] == 'prof') {
-        await prof.remove(where.eq('userId', req.query['userId']));
-        return res.status(200).json({'updated': 'true'});
-      } else if (req.params['type'] == 'Aprof') {
-        await Aprof.remove(where.eq('userId', req.query['userId']));
-        return res.status(200).json({'updated': 'true'});
-      } else if (req.params['type'] == 'phd') {
-        await phd.remove(where.eq('userId', req.query['userId']));
-        return res.status(200).json({'updated': 'true'});
-      } else if (req.params['type'] == 'resources') {
-        await resources.remove(where.eq('userId', req.query['userId']));
-        return res.status(200).json({'updated': 'true'});
+            where.eq('userId', req.body['username']), req.body['newData']);
       }
     }
   ]);

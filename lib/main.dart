@@ -17,7 +17,8 @@ import './screens/dept_aprof_screen.dart';
 import './screens/faculty_screen.dart';
 import './screens/resources_screen.dart';
 import './screens/tabs_screen.dart';
-import './screens/profile_screen.dart';
+import './screens/edit_credentials_screen.dart';
+import './screens/change_password.dart';
 import 'backend/server.dart' as server;
 
 void main() async {
@@ -41,8 +42,13 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
+  void initState() {
+    serverCall();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    server.start();
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
@@ -92,11 +98,18 @@ class _MyAppState extends State<MyApp> {
                   )),
         ),
         //home: TabsScreen(),
-        home: AuthScreen(),
+        home: _isLoading
+            ? Scaffold(
+                backgroundColor: Color(0xFFffe5d9),
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              )
+            : AuthScreen(),
         routes: {
-          //AuthCard.routeName: (ctx) => AuthCard(),
+          ChangePassword.routeName: (ctx) => ChangePassword(),
+          EditCredentials.routeName: (ctx) => EditCredentials(),
           AuthScreen.routeName: (ctx) => AuthScreen(),
-          ProfileScreen.routeName: (ctx) => ProfileScreen(),
           TabsScreen.routeName: (ctx) => TabsScreen(),
           FacultyScreen.routeName: (ctx) => FacultyScreen(),
           ProfScreen.routeName: (ctx) => ProfScreen(),
