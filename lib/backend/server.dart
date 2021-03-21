@@ -214,4 +214,31 @@ Future<void> start() async {
       }
     }
   ]);
+  //DELETE
+   serv.post('/editProfile/:type', [
+    (ServRequest req, ServResponse res) async {
+      users.remove(where.eq('userId', req.body['userId']);
+      if (req.params['type'] == 'prof') {
+        await prof.remove(
+            await where.eq('userId', req.body['userId']));
+        return res.status(200).json({'updated': 'true'});
+      } else if (req.params['type'] == 'Aprof') {
+        await Aprof.remove(
+            await where.eq('userId', req.body['userId']));            
+        return res.status(200).json({'updated': 'true'});
+      } else if (req.params['type'] == 'phd') {
+        await phd.update(
+            await where.eq('userId', req.body['userId']));
+        return res.status(200).json({'updated': 'true'});
+      } else if (req.params['type'] == 'resources') {
+        await resources.remove(
+            await where.eq('userId', req.body['userId']));
+        return res.status(200).json({'updated': 'true'});
+      } else if (req.params['type'] == 'password') {
+        await users.update(
+            where.eq('userId', req.body['username']), req.body['newData']);
+      }
+    }
+  ]);
+  
 }
