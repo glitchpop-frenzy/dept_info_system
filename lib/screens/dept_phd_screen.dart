@@ -73,7 +73,7 @@ class _DeptPhdScreenState extends State<DeptPhdScreen> {
         preferredSize:
             Size(double.infinity, MediaQuery.of(context).size.height * 0.07),
         child: AppBar(
-          title: Text('$title / Phd Students',
+          title: Text('$title / PhD Students',
               style: TextStyle(color: Color(0xFFecf8f8))),
           flexibleSpace: Container(
             decoration: BoxDecoration(
