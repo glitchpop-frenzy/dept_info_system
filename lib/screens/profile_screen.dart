@@ -56,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       builder: (ctx) => AlertDialog(
         title: Text('Confirmation'),
         content: Text(
-          'Are you sure you want to delete you account?',
+          'Are you sure you want to delete your account?',
           style: TextStyle(fontSize: 18),
         ),
         actions: [
