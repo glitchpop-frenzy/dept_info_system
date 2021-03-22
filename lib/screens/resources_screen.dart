@@ -59,7 +59,7 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
           style: Theme.of(context).textTheme.headline6,
         ),
         Text(
-          '$fac',
+          fac == 'N/A' ? 'N/A' : '$fac',
           // textAlign: TextAlign.right,
           style: Theme.of(context).textTheme.headline5,
         ),
@@ -124,8 +124,8 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                             fieldInfo(
                                 'Lab Assistant ',
                                 dataList[index].labAss.isEmpty
-                                    ? dataList[index].labAss
-                                    : ''),
+                                    ? 'N/A'
+                                    : dataList[index].labAss),
                             SizedBox(
                               height: 8,
                             ),
@@ -139,14 +139,19 @@ class _ResourcesScreenState extends State<ResourcesScreen> {
                                   Flexible(
                                     child: FittedBox(
                                         child: fieldInfo(
-                                            'Type ', dataList[index].type)),
+                                            'Type ',
+                                            dataList[index].type.isEmpty
+                                                ? 'N/A'
+                                                : dataList[index].type == null
+                                                    ? null
+                                                    : dataList[index].type)),
                                   )
                                 ]),
                             SizedBox(
                               height: 8,
                             ),
                             fieldInfo('Capacity ',
-                                (dataList[index].capacity).toString())
+                                (dataList[index].capacity).toStringAsFixed(0))
                           ]),
                     ),
                   ),

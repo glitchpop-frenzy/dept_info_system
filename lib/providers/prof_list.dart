@@ -20,8 +20,15 @@ class Prof {
   final String dept;
   final String education;
   final String DoJ;
+  final String additional;
 
-  Prof({this.userId, this.name, this.dept, this.education, this.DoJ});
+  Prof(
+      {this.userId,
+      this.name,
+      this.dept,
+      this.education,
+      this.DoJ,
+      this.additional});
 
   factory Prof.fromJson(Map<String, dynamic> json) {
     return Prof(
@@ -29,7 +36,8 @@ class Prof {
         name: json['name'],
         dept: json['dept'],
         education: json['education'],
-        DoJ: json['DoJ']);
+        DoJ: json['DoJ'],
+        additional: json['additional']);
   }
 }
 

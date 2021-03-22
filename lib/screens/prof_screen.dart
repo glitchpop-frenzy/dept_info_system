@@ -52,7 +52,7 @@ class _ProfScreenState extends State<ProfScreen> {
     }
 
     Widget fieldInfo(String field, String fac) {
-      return Row(children: [
+      return Row(mainAxisAlignment: MainAxisAlignment.start, children: [
         Text(
           '$field: ',
           style: Theme.of(context).textTheme.headline6,
@@ -102,24 +102,29 @@ class _ProfScreenState extends State<ProfScreen> {
                         gradient: LinearGradient(colors: grad()),
                       ),
                       child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: <Widget>[
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'userId: ',
-                                  style: Theme.of(context).textTheme.headline4,
+                                fieldInfo('userId ', dataList[index].userId),
+                                SizedBox(
+                                  width: 5.0,
                                 ),
                                 Text(
-                                  '${dataList[index].userId}',
-                                  style: Theme.of(context).textTheme.headline3,
+                                  (dataList[index].additional == null)
+                                      ? ''
+                                      : '${dataList[index].additional}',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 )
                               ],
                             ),
                             SizedBox(
                               height: 5,
                             ),
+
                             fieldInfo('Name ', dataList[index].name),
+
                             SizedBox(
                               height: 8,
                             ),

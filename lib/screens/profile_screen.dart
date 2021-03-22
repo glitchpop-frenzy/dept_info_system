@@ -144,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: CircularProgressIndicator(),
               )
             : Container(
-                color: Color(0xFFedf2fb),
+                //color: Color(0xFFedf2fb),
                 // decoration: BoxDecoration(color: Color(0xFFedede8)
                 //     // gradient: LinearGradient(
                 //     //     colors: [Color(0xFFbc4749), Color(0xFFd7e3fc)],
@@ -157,7 +157,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       height: 10,
                     ),
                     ListTile(
-                      tileColor: Color(0xFFf9dbbd),
+                      tileColor: Color(0xFFfff1e6),
                       onTap: () {
                         userData(widget._userId);
                       },

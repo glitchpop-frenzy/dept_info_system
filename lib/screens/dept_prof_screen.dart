@@ -64,10 +64,12 @@ class _DeptProfScreenState extends State<DeptProfScreen> {
           '$field: ',
           style: Theme.of(context).textTheme.headline6,
         ),
-        Text(
-          '$fac',
-          // textAlign: TextAlign.right,
-          style: Theme.of(context).textTheme.headline5,
+        FittedBox(
+          child: Text(
+            '$fac',
+            // textAlign: TextAlign.right,
+            style: Theme.of(context).textTheme.headline5,
+          ),
         ),
       ]);
     }
@@ -113,14 +115,25 @@ class _DeptProfScreenState extends State<DeptProfScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
                             Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'userId: ',
-                                  style: Theme.of(context).textTheme.headline4,
+                                fieldInfo('userId ', dataList[index].userId),
+                                // Text(
+                                //   'userId: ',
+                                //   style: Theme.of(context).textTheme.headline4,
+                                // ),
+                                // Text(
+                                //   '${dataList[index].userId}',
+                                //   style: Theme.of(context).textTheme.headline3,
+                                // ),
+                                SizedBox(
+                                  width: 5.0,
                                 ),
                                 Text(
-                                  '${dataList[index].userId}',
-                                  style: Theme.of(context).textTheme.headline3,
+                                  (dataList[index].additional == null)
+                                      ? ''
+                                      : '${dataList[index].additional}',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
                                 )
                               ],
                             ),
