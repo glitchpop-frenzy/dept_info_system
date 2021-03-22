@@ -68,7 +68,7 @@ class _TabsScreenState extends State<TabsScreen> {
             type: BottomNavigationBarType.shifting,
             items: [
               BottomNavigationBarItem(
-                  icon: Icon(Icons.apartment_sharp), label: 'Dept'),
+                  icon: Icon(Icons.apartment_sharp), label: 'Department'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.school), label: 'Faculty'),
               // navButton3
