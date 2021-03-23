@@ -145,12 +145,12 @@ class _AuthCardState extends State<AuthCard> {
                           borderRadius: BorderRadius.circular(7),
                           child: Container(
                             color: Color(0xFFffd8be),
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.all(7),
                             child: Text(
                               'Okay',
                               style: TextStyle(
                                   fontFamily: 'Prompt',
-                                  fontSize: 15,
+                                  fontSize: 18,
                                   color: Colors.black),
                             ),
                           ),
@@ -161,30 +161,39 @@ class _AuthCardState extends State<AuthCard> {
         }
       } else if (extractedData['user_exists'] == 'No') {
         showDialog(
-            context: context,
-            builder: (ctx) => AlertDialog(
-                  content: Text('This user is not registered!!'),
-                  title: Text('Error'),
-                  titleTextStyle: TextStyle(
-                    fontFamily: 'Prompt',
-                    fontSize: 18,
-                    fontWeight: FontWeight.w400,
-                  ),
-                  actions: [
-                    TextButton(
-                      style: ButtonStyle(
-                          backgroundColor:
-                              MaterialStateProperty.all(Color(0xFFfaedcd))),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                      child: Text(
-                        'Okay',
-                        style: TextStyle(fontFamily: 'Prompt', fontSize: 15),
+          context: context,
+          builder: (ctx) => AlertDialog(
+            content: Text('This user is not registered!!'),
+            title: Text('Authentication Failed'),
+            titleTextStyle: TextStyle(
+              fontFamily: 'Prompt',
+              fontSize: 18,
+              fontWeight: FontWeight.w500,
+              color: Colors.black,
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(7),
+                  child: Container(
+                    color: Color(0xFFffd8be),
+                    padding: EdgeInsets.all(7),
+                    child: Text(
+                      'Okay',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 18,
                       ),
-                    )
-                  ],
-                ));
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
       }
     } on HttpException catch (_) {
       var errorMessage = 'Authentication Failed!!';
@@ -203,6 +212,63 @@ class _AuthCardState extends State<AuthCard> {
     _passwordFocusNode.dispose();
     _focusNode.dispose();
     super.dispose();
+  }
+
+  void _forgotPassword() {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        content: Container(
+          height: 100,
+          child: Column(children: [
+            Text('To reset your password contact administration at:'),
+            SizedBox(
+              height: 10,
+            ),
+            Text('Yash Tiwari: b119064@iiit-bh.ac.in'),
+            SizedBox(
+              height: 3,
+            ),
+            Text('Prasad Dash: b119040@iiit-bh.ac.in'),
+          ]),
+        ),
+        title: ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: Container(
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+            child: Text('Forgot Password?'),
+            color: Color(0xFFffd8be),
+          ),
+        ),
+        titleTextStyle: TextStyle(
+          fontFamily: 'Prompt',
+          fontSize: 18,
+          fontWeight: FontWeight.w500,
+          color: Colors.black,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(7),
+              child: Container(
+                color: Color(0xFFffd8be),
+                padding: EdgeInsets.all(7),
+                child: Text(
+                  'Okay',
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   @override
@@ -335,8 +401,8 @@ class _AuthCardState extends State<AuthCard> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(vertical: 15, horizontal: 45),
-                margin: EdgeInsets.symmetric(vertical: 15),
+                padding: EdgeInsets.symmetric(vertical: 4, horizontal: 45),
+                margin: EdgeInsets.only(top: 3),
                 child: FloatingActionButton(
                   shape: RoundedRectangleBorder(
                     side: BorderSide.merge(BorderSide.none, BorderSide.none),
@@ -353,7 +419,31 @@ class _AuthCardState extends State<AuthCard> {
                           'Login',
                         ),
                 ),
-              )
+              ),
+              SizedBox(
+                height: 1,
+              ),
+              Container(
+                  color: Colors.white,
+                  padding: EdgeInsets.symmetric(vertical: 15, horizontal: 45),
+                  margin: EdgeInsets.symmetric(vertical: 15),
+                  child: FloatingActionButton(
+                    backgroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      side: BorderSide.merge(BorderSide.none, BorderSide.none),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    onPressed: _forgotPassword,
+                    //splashColor: Colors.red,
+                    //backgroundColor: Colors.blue,
+                    child: Text(
+                      'Forgot Password?',
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontSize: 12,
+                          backgroundColor: Colors.white),
+                    ),
+                  ))
             ],
           ),
         ),

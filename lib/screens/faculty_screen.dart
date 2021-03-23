@@ -103,7 +103,7 @@ class FacultyScreen extends StatelessWidget {
                   },
                   child: Center(
                       child: Text(
-                    'PhD Scholars',
+                    'PhD Students',
                     style: textStyle(36),
                   )),
                 ),

@@ -66,7 +66,10 @@ class _ChangePasswordState extends State<ChangePassword> {
                         padding: EdgeInsets.all(7),
                         child: Text(
                           'Okay',
-                          style: TextStyle(color: Colors.black, fontSize: 18),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                          ),
                         ),
                       ),
                     ),
