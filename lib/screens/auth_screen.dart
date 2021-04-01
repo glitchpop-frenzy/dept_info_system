@@ -404,6 +404,7 @@ class _AuthCardState extends State<AuthCard> {
                 padding: EdgeInsets.symmetric(vertical: 4, horizontal: 45),
                 margin: EdgeInsets.only(top: 3),
                 child: FloatingActionButton(
+                  heroTag: 'btn1',
                   shape: RoundedRectangleBorder(
                     side: BorderSide.merge(BorderSide.none, BorderSide.none),
                     borderRadius: BorderRadius.circular(5),
@@ -428,6 +429,7 @@ class _AuthCardState extends State<AuthCard> {
                   padding: EdgeInsets.symmetric(vertical: 15, horizontal: 45),
                   margin: EdgeInsets.symmetric(vertical: 15),
                   child: FloatingActionButton(
+                    heroTag: 'btn2',
                     backgroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       side: BorderSide.merge(BorderSide.none, BorderSide.none),
